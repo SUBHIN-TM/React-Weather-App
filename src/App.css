@@ -7,7 +7,11 @@ body{
     width: 100%;
 }
 
-th{
+/* th{
     text-align: start;
+} */
+
+#tableRow{
+    background: rgba(8 8 8 / 66%);
 }
 

@@ -8,7 +8,7 @@ const Home=()=>{
         <div>
         <h1 className="font-semibold text-center text-2xl p-10">Weather App</h1>
         </div>
-        <div className="p-10">
+        <div className="pl-10 pr-10">
             <div><Table/></div>
         </div>
         
