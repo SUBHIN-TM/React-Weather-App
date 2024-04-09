@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from 'axios'
 import TableBody from "./TableBody"
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const Table = () => {
     const [city, setcity] = useState("")
@@ -29,21 +30,24 @@ const Table = () => {
                 <div id="searchDiv" className="p-2 ">Choose Your City
                     <input className="ml-5" type="search" name="city" id="" placeholder="City Name" />
                 </div>
-                <div>
-                    <table className="w-full">
-                        <thead>
+                <div className="tableContainer ">
+                    <table className="overflow-y-scroll inline-block w-auto " style={{ maxHeight: 500}}>
+                        <thead className="sticky top-0 bg-yellow-300 w-full">
                             <tr >
                                 <th className="w-6/12 p-3">City Name</th>
                                 <th className="w-4/12">Country</th>
                                 <th className="w-2/12">TimeZone</th>
                             </tr>
                         </thead>
+                      
                         <tbody>
                             {city.map((cities)=>{
                                return  <TableBody key={cities.geoname_id} city={cities} />
                             })}
+                                      
                         </tbody>
-                       
+                  
+
                    </table>
                 </div>
             </div>
