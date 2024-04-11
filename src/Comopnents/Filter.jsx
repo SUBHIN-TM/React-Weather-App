@@ -28,10 +28,10 @@ const Filter = () => {
 
     return (
         <>
-            <div className="border  lg:w-4/12 w-fit  flex my-10 xl:mt-0 font-semibold ">
-                <div className=" bg-yellow-300  pt-3">
+            <div className="border w-9/12 lg:w-4/12  flex my-10 xl:mt-0 font-semibold ">
+                <div className=" bg-yellow-300  pt-3 w-6/12">
                     <h1 className="mb-3 pl-8">Country Name</h1>
-                    {allCountry.map((data,index) => {
+                    {allCountry.slice(0,23).map((data,index) => {
                         return (
                             <>
                                 <div className="flex" key={index}>
@@ -44,9 +44,9 @@ const Filter = () => {
                     })}
 
                 </div>
-                <div className=" bg-emerald-300  pt-3 ">
+                <div className=" bg-emerald-300  pt-3  w-6/12 ">
                 <h1 className="mb-3 pl-8">Tme Zone</h1>
-                    {allTime.map((data,index) => {
+                    {allTime.slice(0,23).map((data,index) => {
                         return (
                             <>
                                 <div className="flex" key={index}>
