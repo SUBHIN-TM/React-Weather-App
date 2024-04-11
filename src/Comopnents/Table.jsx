@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState,useRef  } from "react"
 import axios from 'axios'
 import TableBody from "./TableBody"
-import InfiniteScroll from 'react-infinite-scroll-component';
 import { FaSort } from "react-icons/fa6";
 
 const Table = () => {
     const [city, setcity] = useState([])
     const [sort, setsort] = useState("")
     const [offset, setoffset] = useState(0)
+    const tableRef=useRef(null)
     console.log(offset);
     useEffect(() => {
         allCity()
@@ -68,6 +68,13 @@ const Table = () => {
         }
     }
 
+    const handleScroll =()=>{
+        const {scrollTop,offsetHeight,scrollHeight} =tableRef.current;
+        if(scrollTop +offsetHeight >= scrollHeight){
+            allCity()
+        }
+    }
+
     if (!city) {
         return
     }
@@ -88,7 +95,7 @@ const Table = () => {
                     
                    </select>
                 </div>
-                <div className="tableContainer  overflow-y-auto  lg:w-7/12" style={{maxHeight:600}}>
+                <div className="tableContainer  overflow-y-auto  lg:w-7/12" style={{maxHeight:600}} ref={tableRef} onScroll={handleScroll}>
                         <table className=" w-full">
                             <thead className=" bg-black text-white text-left sticky top-0">
                                 <tr className="">
@@ -104,7 +111,9 @@ const Table = () => {
                                 })}
 
                             </tbody>
+                         
                         </table>
+                        <h1 id="loading" className="text-white font-semibold p-3" >Loading...</h1>
                 </div>
             </div >
         </>

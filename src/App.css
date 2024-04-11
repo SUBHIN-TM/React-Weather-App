@@ -16,3 +16,7 @@ body{
 .tableContainer {
     scrollbar-color: blue black;
   }
+
+  #loading{
+    background: rgba(8 8 8 / 66%);
+  }
