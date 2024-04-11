@@ -76,6 +76,7 @@ const Table = () => {
 
     const handleScroll = () => {
         const { scrollTop, offsetHeight, scrollHeight } = tableRef.current; //THIS DIV CURRENT PROPETIES WILL GIVE SCROLL VALUES ,SO DESTRUCTURE IT AND USE ALTERNATIVELY
+       //scrollTop=no of px scrolled vertically , offsetHeight=heigth of element, scrollheight=total height of content
         if (scrollTop + offsetHeight >= scrollHeight) {
             allCity()
         }

@@ -19,7 +19,7 @@ const Filter = () => {
             // console.log(country.data.results.flat(Infinity).map((data)=>data?.cou_name_en));     
             setallCountry(country.data.results.map((data) => data?.cou_name_en).filter((name) => name))
             // console.log(timezone.data.results.flat(Infinity).map((data)=>data?.timezone));
-            setallTime(timezone.data.results.flat(Infinity).map((data) => data?.timezone))
+            setallTime(timezone.data.results.map((data) => data?.timezone))
         } catch (error) {
             console.error(error);
         }
