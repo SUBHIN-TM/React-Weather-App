@@ -3,15 +3,16 @@ body{
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center; 
-    min-height: 100vh; 
     width: 100%;
+    height:54.5rem;
 }
 
-/* th{
-    text-align: start;
-} */
+
 
 #tableRow{
     background: rgba(8 8 8 / 66%);
 }
 
+.tableContainer {
+    scrollbar-color: blue black;
+  }
