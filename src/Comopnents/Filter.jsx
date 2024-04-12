@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios"
 
-const Filter = () => {
+const Filter = ({selectedCountryLiftUp,selectedcountries,selectedTimeLiftUp,selectedtimezone}) => {
     const [more1, setmore1] = useState(false)
     const [more2, setmore2] = useState(false)
-   
 
+ 
 
+  
+    
 
     useEffect(() => {
         fetchFilter()
@@ -32,6 +34,30 @@ const Filter = () => {
     }
 
 
+
+     const conutrySelecting=(checkedCntry)=>{ //CHECK BOX COUNTRY SELECTING
+        if(selectedcountries.includes(checkedCntry)){
+       const selected=selectedcountries.filter((cntry)=> cntry !=checkedCntry)
+         selectedCountryLiftUp(selected)
+        }else{
+            selectedCountryLiftUp([...selectedcountries,checkedCntry])
+        }  
+     }
+
+
+     const timeSelecting=(checkedTime)=>{
+        if(selectedtimezone.includes(checkedTime)){
+        const selected=selectedtimezone.filter((time)=> time !=checkedTime)
+        selectedTimeLiftUp(selected)
+        }else{
+            selectedTimeLiftUp([...selectedtimezone,checkedTime])
+        }  
+     }
+
+
+
+
+
     return (
         <>
             <div id="filterSection" className="border-black border w-9/12 lg:w-4/12  flex my-10 xl:mt-0 font-semibold ">
@@ -41,7 +67,8 @@ const Filter = () => {
                         return (
                            
                                 <div className="flex" key={data}>
-                                    <input  type="checkbox" name="" id={data} className="mx-3 " />
+                                    <input  type="checkbox" name="" id={data} className="mx-3 " 
+                                      onChange={(e)=>conutrySelecting(e.target.id)}/>
                                     <label className="" htmlFor={data}>{data}</label>
                                 </div>
                          
@@ -53,7 +80,8 @@ const Filter = () => {
                             return (
                               
                                     <div className="flex" key={data}>
-                                        <input type="checkbox" name="" id={data} className="mx-3" />
+                                        <input type="checkbox" name="" id={data} className="mx-3" 
+                                           onChange={(e)=>conutrySelecting(e.target.id)}/>
                                         <label htmlFor={data}>{data}</label>
                                     </div>
                               
@@ -67,7 +95,8 @@ const Filter = () => {
                             return (
                                
                                     <div className="flex" key={data}>
-                                        <input type="checkbox" name="" id={data} className="mx-3" />
+                                        <input type="checkbox" name="" id={data} className="mx-3"
+                                           onChange={(e)=>conutrySelecting(e.target.id)} />
                                         <label htmlFor={data}>{data}</label>
                                     </div>
                                 
@@ -87,7 +116,8 @@ const Filter = () => {
                         return (
                           
                                 <div className="flex" key={data}>
-                                    <input type="checkbox" name="" id={data} className="mx-3" />
+                                    <input type="checkbox" name="" id={data} className="mx-3"
+                                      onChange={(e)=>timeSelecting(e.target.id)} />
                                     <label htmlFor={data}>{data}</label>
                                 </div>
 
@@ -99,7 +129,8 @@ const Filter = () => {
                             return (
                               
                                     <div className="flex" key={data}>
-                                        <input type="checkbox" name="" id={data} className="mx-3" />
+                                        <input type="checkbox" name="" id={data} className="mx-3" 
+                                          onChange={(e)=>timeSelecting(e.target.id)} />
                                         <label htmlFor={data}>{data}</label>
                                     </div>
                               
@@ -112,7 +143,8 @@ const Filter = () => {
                             return (
                               
                                     <div className="flex" key={data}>
-                                        <input type="checkbox" name="" id={data} className="mx-3" />
+                                        <input type="checkbox" name="" id={data} className="mx-3" 
+                                           onChange={(e)=>timeSelecting(e.target.id)} />
                                         <label htmlFor={data}>{data}</label>
                                     </div>
                                

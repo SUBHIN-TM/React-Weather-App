@@ -8,12 +8,38 @@ const Table = () => {
     const [city, setcity] = useState([])
     const [sort, setsort] = useState("")
     const [offset, setoffset] = useState(0)
-    const [timezone, settimezone] = useState([])
+    // const [timezone, settimezone] = useState([])
+    const [selectedcountries,setselectedcountries]=useState([])
+    const [selectedtimezone,setselectedtimezone]=useState([])
+   
+
+   
+ 
+
+    const [filter,setfilter]=useState(["Algeria","Benin", "Angola"])
+    let baseURL="https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?";
+
     const tableRef = useRef(null)
 
     useEffect(() => {
         allCity()
     }, [sort])
+
+
+    const selectedCountryLiftUp=(selectedCountries)=>{ 
+        setselectedcountries(selectedCountries)    
+    }
+    console.log("selectedcountries",selectedcountries);
+
+    const selectedTimeLiftUp=(selectedTime)=>{ 
+        setselectedtimezone(selectedTime)    
+    }
+    console.log("selectedTimes",selectedtimezone);
+   
+
+
+
+
 
     let sortFuction = (parameter) => {
         console.log("called");
@@ -47,25 +73,31 @@ const Table = () => {
         setcity([])
     }
 
-
-
     const allCity = async () => {
 
         try {
             let response
-            if (sort) {//IF SORT SELECT IT WILL CALL
+            if(filter){
+                const refineParams = filter.map(country => `refine=cou_name_en:"${country}"`).join('&');
+                response = await axios.get(`${baseURL}order_by=-cou_name_en&limit=20&offset=${offset}&${refineParams}`)
+                // response = await axios.get(`https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?limit=20&refine=cou_name_en:"Algeria"&refine=cou_name_en:"Angola"`)
+                console.log("filer respo",response);
+               
+            }
+            else if (sort) {//IF SORT SELECT IT WILL CALL
                 response = await axios.get(`https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?order_by=${sort}&limit=20&offset=${offset}`)
-                console.log('sort called');
+             
             } else { //IT IS A DEFAULT CALL WIHTOUT ANY SORTING
                 response = await axios.get(`https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?limit=20&offset=${offset}`)
             }
+           
 
             setTimeout(() => {
                 setcity((previous) => [...previous, ...response.data.results])
                 setoffset((pvs) => pvs + 20)
-                let uiqueTimezone = [...new Set(response.data.results.map((data) => data.timezone.split('/')[0]))]
-                // console.log(uiqueTimezone);
-                settimezone((prev) => [...new Set([...prev, ...uiqueTimezone])]);
+                // let uiqueTimezone = [...new Set(response.data.results.map((data) => data.timezone.split('/')[0]))]
+                // // console.log(uiqueTimezone);
+                // settimezone((prev) => [...new Set([...prev, ...uiqueTimezone])]);
             }, 2000);
 
         } catch (error) {
@@ -113,7 +145,7 @@ const Table = () => {
                         <h1 id="loading" className="text-white font-semibold p-3" >Loading...</h1>
                     </div>
 
-                    <Filter />
+                    <Filter selectedCountryLiftUp={selectedCountryLiftUp} selectedcountries={selectedcountries} selectedTimeLiftUp={selectedTimeLiftUp} selectedtimezone={selectedtimezone} />
 
                 </div>
 
