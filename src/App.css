@@ -20,3 +20,11 @@ body{
   #loading{
     background: rgba(8 8 8 / 66%);
   }
+
+  #countryFilterBox{
+    border-right: 1px solid black;
+  }
+
+#filterSection label{
+  color: rgb(255, 254, 254);
+}

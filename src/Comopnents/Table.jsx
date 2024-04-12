@@ -52,7 +52,6 @@ const Table = () => {
     const allCity = async () => {
 
         try {
-            console.log("sort value", sort);
             let response
             if (sort) {//IF SORT SELECT IT WILL CALL
                 response = await axios.get(`https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?order_by=${sort}&limit=20&offset=${offset}`)
@@ -109,7 +108,7 @@ const Table = () => {
 
                             <tbody >
                                 {city.map((cities) => {
-                                    return <TableBody key={cities.coordinates.lon} city={cities} />
+                                    return <TableBody key={cities.geoname_id} city={cities} />
                                 })}
 
                             </tbody>
