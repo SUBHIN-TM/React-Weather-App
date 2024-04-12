@@ -5,11 +5,6 @@ const Filter = ({selectedCountryLiftUp,selectedcountries,selectedTimeLiftUp,sele
     const [more1, setmore1] = useState(false)
     const [more2, setmore2] = useState(false)
 
- 
-
-  
-    
-
     useEffect(() => {
         fetchFilter()
     }, [])
@@ -55,24 +50,18 @@ const Filter = ({selectedCountryLiftUp,selectedcountries,selectedTimeLiftUp,sele
      }
 
 
-
-
-
     return (
         <>
-            <div id="filterSection" className="border-black border w-9/12 lg:w-4/12  flex my-10 xl:mt-0 font-semibold ">
+            <div id="filterSection" className="border-black border w-9/12 lg:w-7/12 xl:7/12 lg:mt-0  flex  xl:mt-0 font-semibold mt-9 ">
                 <div id="countryFilterBox" className=" w-6/12">
                     <h1 className="mb-3 pl-8 text-white py-3 bg-black ">Country Name</h1>
-                    {allCountry.slice(0, 22).map((data) => {
-                        return (
-                           
+                    {allCountry.slice(0, 21).map((data) => {
+                        return (                 
                                 <div className="flex" key={data}>
                                     <input  type="checkbox" name="" id={data} className="mx-3 " 
                                       onChange={(e)=>conutrySelecting(e.target.id)}/>
                                     <label className="" htmlFor={data}>{data}</label>
                                 </div>
-                         
-
                         )
                     })}
                     {more1 &&
@@ -112,7 +101,7 @@ const Filter = ({selectedCountryLiftUp,selectedcountries,selectedTimeLiftUp,sele
                 </div>
                 <div className="  w-6/12 ">
                     <h1 className="mb-3 pl-8 bg-black text-white py-3">Tme Zone</h1>
-                    {allTime.slice(0, 23).map((data) => {
+                    {allTime.slice(0, 22).map((data) => {
                         return (
                           
                                 <div className="flex" key={data}>
@@ -139,7 +128,7 @@ const Filter = ({selectedCountryLiftUp,selectedcountries,selectedTimeLiftUp,sele
                         )}
 
                     {more2 &&
-                        allTime.slice(52,231).map((data) => {
+                        allTime.slice(52,230).map((data) => {
                             return (
                               
                                     <div className="flex" key={data}>
