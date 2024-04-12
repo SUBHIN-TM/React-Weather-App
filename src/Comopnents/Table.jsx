@@ -92,10 +92,7 @@ const Table = () => {
                     <label className=" font-semibold " htmlFor="">Choose Your City</label>
                     <input className="px-3 py-1 ml-6 rounded-lg" type="search" name="city" id="" placeholder="City Name" />
                 </div>
-                <div>
-                  
-                </div>
-                <div className="block xl:flex lg:gap-6">
+                <div className="block lg:flex lg:gap-6">
                     <div className="tableContainer  overflow-y-auto  lg:w-7/12" style={{ maxHeight: 600 }} ref={tableRef} onScroll={handleScroll}>
                         <table className=" w-full">
                             <thead className=" bg-black text-white text-left sticky top-0">
