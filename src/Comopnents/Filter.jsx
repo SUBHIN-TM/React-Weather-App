@@ -41,20 +41,20 @@ const Filter = () => {
                         return (
                            
                                 <div className="flex" key={data}>
-                                    <input  type="checkbox" name="" id="" className="mx-3 " />
-                                    <label className="" htmlFor="">{data}</label>
+                                    <input  type="checkbox" name="" id={data} className="mx-3 " />
+                                    <label className="" htmlFor={data}>{data}</label>
                                 </div>
                          
 
                         )
                     })}
                     {more1 &&
-                        allCountry.slice(23, 50).map((data, index) => {
+                        allCountry.slice(23, 50).map((data) => {
                             return (
                               
-                                    <div className="flex" key={index}>
-                                        <input type="checkbox" name="" id="" className="mx-3" />
-                                        <label htmlFor="">{data}</label>
+                                    <div className="flex" key={data}>
+                                        <input type="checkbox" name="" id={data} className="mx-3" />
+                                        <label htmlFor={data}>{data}</label>
                                     </div>
                               
 
@@ -63,12 +63,12 @@ const Filter = () => {
                         )}
 
                     {more2 &&
-                        allCountry.slice(51).map((data, index) => {
+                        allCountry.slice(51).map((data) => {
                             return (
                                
-                                    <div className="flex" key={index}>
-                                        <input type="checkbox" name="" id="" className="mx-3" />
-                                        <label htmlFor="">{data}</label>
+                                    <div className="flex" key={data}>
+                                        <input type="checkbox" name="" id={data} className="mx-3" />
+                                        <label htmlFor={data}>{data}</label>
                                     </div>
                                 
 
@@ -83,24 +83,24 @@ const Filter = () => {
                 </div>
                 <div className="  w-6/12 ">
                     <h1 className="mb-3 pl-8 bg-black text-white py-3">Tme Zone</h1>
-                    {allTime.slice(0, 23).map((data, index) => {
+                    {allTime.slice(0, 23).map((data) => {
                         return (
                           
-                                <div className="flex" key={index}>
-                                    <input type="checkbox" name="" id="" className="mx-3" />
-                                    <label htmlFor="">{data}</label>
+                                <div className="flex" key={data}>
+                                    <input type="checkbox" name="" id={data} className="mx-3" />
+                                    <label htmlFor={data}>{data}</label>
                                 </div>
 
                            
                         )
                     })}
                     {more1 &&
-                        allTime.slice(24, 51).map((data, index) => {
+                        allTime.slice(24, 51).map((data) => {
                             return (
                               
-                                    <div className="flex" key={index}>
-                                        <input type="checkbox" name="" id="" className="mx-3" />
-                                        <label htmlFor="">{data}</label>
+                                    <div className="flex" key={data}>
+                                        <input type="checkbox" name="" id={data} className="mx-3" />
+                                        <label htmlFor={data}>{data}</label>
                                     </div>
                               
                             )
@@ -108,12 +108,12 @@ const Filter = () => {
                         )}
 
                     {more2 &&
-                        allTime.slice(52,231).map((data, index) => {
+                        allTime.slice(52,231).map((data) => {
                             return (
                               
-                                    <div className="flex" key={index}>
-                                        <input type="checkbox" name="" id="" className="mx-3" />
-                                        <label htmlFor="">{data}</label>
+                                    <div className="flex" key={data}>
+                                        <input type="checkbox" name="" id={data} className="mx-3" />
+                                        <label htmlFor={data}>{data}</label>
                                     </div>
                                
 
