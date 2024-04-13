@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios"
 
 const Filter = ({selectedCountryLiftUp,selectedcountries,selectedTimeLiftUp,selectedtimezone}) => {
+    console.log("Filter");
     const [more1, setmore1] = useState(false)
     const [more2, setmore2] = useState(false)
 
@@ -40,7 +41,7 @@ const Filter = ({selectedCountryLiftUp,selectedcountries,selectedTimeLiftUp,sele
      }
 
 
-     const timeSelecting=(checkedTime)=>{
+     const timeSelecting=(checkedTime)=>{//CHECK BOX Time SELECTING
         if(selectedtimezone.includes(checkedTime)){
         const selected=selectedtimezone.filter((time)=> time !=checkedTime)
         selectedTimeLiftUp(selected)

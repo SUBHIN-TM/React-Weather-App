@@ -5,21 +5,18 @@ import { FaSort } from "react-icons/fa6";
 import Filter from "./Filter";
 
 const Table = () => {
+    console.log("Table");
     const [city, setcity] = useState([])
     const [sort, setsort] = useState("")
     const [offset, setoffset] = useState(0)
-    // const [timezone, settimezone] = useState([])
     const [selectedcountries,setselectedcountries]=useState([])
     const [selectedtimezone,setselectedtimezone]=useState([])
+    const tableRef = useRef(null) //REFFERENCE FOR SCROLLABLE CONTROLLER
    
-
-   
- 
-
-    const [filter,setfilter]=useState(["Algeria","Benin", "Angola"])
+    const [filter]=useState(null)
     let baseURL="https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?";
 
-    const tableRef = useRef(null)
+   
 
     useEffect(() => {
         allCity()
@@ -29,12 +26,12 @@ const Table = () => {
     const selectedCountryLiftUp=(selectedCountries)=>{ 
         setselectedcountries(selectedCountries)    
     }
-    console.log("selectedcountries",selectedcountries);
+    // console.log("selectedcountries",selectedcountries);
 
     const selectedTimeLiftUp=(selectedTime)=>{ 
         setselectedtimezone(selectedTime)    
     }
-    console.log("selectedTimes",selectedtimezone);
+    // console.log("selectedTimes",selectedtimezone);
    
 
 
@@ -42,7 +39,6 @@ const Table = () => {
 
 
     let sortFuction = (parameter) => {
-        console.log("called");
         if (parameter === 'name') {
             setsort((previous) => {
                 if (previous === 'name') {
@@ -68,26 +64,29 @@ const Table = () => {
                 }
             })
         }
-
         setoffset(0)
         setcity([])
     }
 
     const allCity = async () => {
+        console.log("called");
 
         try {
             let response
             if(filter){
+                console.log("filter get");
                 const refineParams = filter.map(country => `refine=cou_name_en:"${country}"`).join('&');
                 response = await axios.get(`${baseURL}order_by=-cou_name_en&limit=20&offset=${offset}&${refineParams}`)
                 // response = await axios.get(`https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?limit=20&refine=cou_name_en:"Algeria"&refine=cou_name_en:"Angola"`)
-                console.log("filer respo",response);
+                // console.log("filer respo",response);
                
             }
             else if (sort) {//IF SORT SELECT IT WILL CALL
+                console.log("sort call");
                 response = await axios.get(`https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?order_by=${sort}&limit=20&offset=${offset}`)
              
             } else { //IT IS A DEFAULT CALL WIHTOUT ANY SORTING
+                console.log("none");
                 response = await axios.get(`https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?limit=20&offset=${offset}`)
             }
            
@@ -95,9 +94,6 @@ const Table = () => {
             setTimeout(() => {
                 setcity((previous) => [...previous, ...response.data.results])
                 setoffset((pvs) => pvs + 20)
-                // let uiqueTimezone = [...new Set(response.data.results.map((data) => data.timezone.split('/')[0]))]
-                // // console.log(uiqueTimezone);
-                // settimezone((prev) => [...new Set([...prev, ...uiqueTimezone])]);
             }, 2000);
 
         } catch (error) {
@@ -107,8 +103,11 @@ const Table = () => {
 
     const handleScroll = () => {
         const { scrollTop, offsetHeight, scrollHeight } = tableRef.current; //THIS DIV CURRENT PROPETIES WILL GIVE SCROLL VALUES ,SO DESTRUCTURE IT AND USE ALTERNATIVELY
-       //scrollTop=no of px scrolled vertically , offsetHeight=heigth of element, scrollheight=total height of content
-        if (scrollTop + offsetHeight >= scrollHeight) {
+       //scrollTop=no of px scrolled vertically form the messure from top , offsetHeight=fixed heigtht of element or  , scrollheight=total height of content including overflow
+    //    console.log("top",scrollTop); //
+    //    console.log("off",offsetHeight);
+    //    console.log("scr hit",scrollHeight);
+       if (scrollTop+2 + offsetHeight >= scrollHeight) {
             allCity()
         }
     }
@@ -125,7 +124,7 @@ const Table = () => {
                     <input className="px-3 py-1 ml-6 rounded-lg" type="search" name="city" id="" placeholder="City Name" />
                 </div>
                 <div className="block lg:flex lg:gap-6">
-                    <div className="tableContainer  overflow-y-auto  lg:w-7/12" style={{ maxHeight: 599 }} ref={tableRef} onScroll={handleScroll}>
+                    <div className="tableContainer  overflow-y-auto  lg:w-7/12" style={{ maxHeight: 599}} ref={tableRef} onScroll={handleScroll}>
                         <table className=" w-full">
                             <thead className=" bg-black text-white text-left sticky top-0">
                                 <tr className="">
@@ -136,8 +135,8 @@ const Table = () => {
                             </thead>
 
                             <tbody >
-                                {city.map((cities) => {
-                                    return <TableBody key={cities.geoname_id} city={cities} />
+                                {city.map((cities,index) => {
+                                    return <TableBody key={cities.geoname_id+index} city={cities} />
                                 })}
 
                             </tbody>
