@@ -73,7 +73,7 @@ const Table = () => {
     const allCity = async () => {
         try {
             let finalURL = baseURL
-            if (sort) {
+            if (sort) { //IF SORT SELECTED THE SELECTED CREITERIA WILL ADDED TO THE SENDING URL
                 finalURL += `&order_by=${sort}`
             }
             if (selectedcountries.length > 0) {
@@ -88,7 +88,7 @@ const Table = () => {
                 finalURL += `&where="${search}"`
             }
             console.log("Final URL", finalURL);
-            setIsloading(true)
+            setIsloading(true) //TO FIND THE API CALL TIME AND PRINT LOADING WHILE PROMISE PENDING
             const response = await axios.get(finalURL)
             setcity((previous) => [...previous, ...response.data.results])
             setoffset((pvs) => pvs + 20)
@@ -99,7 +99,7 @@ const Table = () => {
             setError(error)
         }
         finally {
-            setIsloading(false)
+            setIsloading(false) //API RESULT COMES MEANS PROMISE END AND IT MARKED AS FALSE TO REMOVE LOADING..
         }
     }
 
@@ -117,10 +117,10 @@ const Table = () => {
         setcity([])
     }
 
-    if (!city) {
+    if (!city) { //IF THE CITY IS NOT FETCHED 
         return(
             <>
-            <div id="loader"></div>
+            <div id="loader"></div> 
             </>
         )
     }

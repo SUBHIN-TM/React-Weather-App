@@ -2,7 +2,6 @@ import Table from "./Table";
 
 
 const Home=()=>{
-    //  console.log("Home");
     return(
         <>
         <div>
@@ -11,9 +10,7 @@ const Home=()=>{
         <div >
             <div><Table/></div>
         </div>    
-        </>
-      
-         
+        </>     
     )
 }
 
