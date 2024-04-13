@@ -5,19 +5,21 @@ import { FaSort } from "react-icons/fa6";
 import Filter from "./Filter";
 
 const Table = () => {
-    // console.log("Table");
     const [city, setcity] = useState([])
     const [sort, setsort] = useState("")
     const [offset, setoffset] = useState(0)
     const [selectedcountries,setselectedcountries]=useState([])
     const [selectedtimezone,setselectedtimezone]=useState([])
+    const [search,setsearch]=useState("")
+    const [isLoading,setIsloading]=useState(false)
+    const [error,setError]=useState(null)
     const tableRef = useRef(null) //REFFERENCE FOR SCROLLABLE CONTROLLER
    
-    let baseURL="https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?";
+    let baseURL=`https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?limit=20&offset=${offset}`
 
     useEffect(() => {
         allCity()
-    }, [sort,selectedcountries,selectedtimezone])
+    }, [sort,selectedcountries,selectedtimezone,search])
 
 
     const selectedCountryLiftUp=(selectedCountries)=>{ 
@@ -25,15 +27,15 @@ const Table = () => {
         setoffset(0)
         setcity([])   
     }
-    console.log("selectedcountries",selectedcountries);
-
+   
     const selectedTimeLiftUp=(selectedTime)=>{ 
         setselectedtimezone(selectedTime)
         setoffset(0)
         setcity([])       
     }
-    console.log("selectedTimes",selectedtimezone);
-   
+
+    
+    console.log("STATUS",isLoading);
 
 
 
@@ -72,42 +74,33 @@ const Table = () => {
     const allCity = async () => {
         console.log("api get called");
         try {
-          //  let search=https://public.opendatasoft.com/explore/embed/dataset/geonames-all-cities-with-a-population-1000/table/?disjunctive.cou_name_en&sort=name&q=ko
-            let response
-            if(selectedcountries.length >0 || selectedtimezone.length >0){
-                console.log("filter get");
-                const refineParamsTime=selectedtimezone.map(time => `&refine=timezone:"${time}"`).join('');
-                console.log("time url",refineParamsTime);
-                const refineParams = selectedcountries.map(country => `&refine=cou_name_en:"${country}"`).join('');
-                console.log("cntry url",refineParams);
-                // console.log(`${baseURL}order_by=-cou_name_en&limit=20&offset=${offset}${refineParamsTime}`);
-                if(sort){
-                    response = await axios.get(`${baseURL}order_by=${sort}&limit=20&offset=${offset}${refineParamsTime}${refineParams}`)
-                }else{
-                    response = await axios.get(`${baseURL}limit=20&offset=${offset}${refineParamsTime}${refineParams}`)
-                    // response = await axios.get(`https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?limit=20&refine=cou_name_en:"Algeria"&refine=cou_name_en:"Angola"`)
-                }
-             
-                console.log("fiter respo",response.data.results);        
+            let finalURL=baseURL
+            if(sort){
+                finalURL +=`&order_by=${sort}`
             }
-            else if (sort) {//IF SORT SELECT IT WILL CALL
-                console.log("sort call");
-                response = await axios.get(`https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?order_by=${sort}&limit=20&offset=${offset}`)
-             
-            } else { //IT IS A DEFAULT CALL WIHTOUT ANY SORTING
-                console.log("none");
-                // response = await axios.get(`https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?limit=20&offset=${offset}`)
-                response = await axios.get(`https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?where='ko'&limit=20&order_by=name`)
+            if(selectedcountries.length >0 ){
+                const filterCountryArrayJoinedString = selectedcountries.map(country => `&refine=cou_name_en:"${country}"`).join('');
+                finalURL +=`${filterCountryArrayJoinedString}`         
             }
-           
-
-            setTimeout(() => {
+            if(selectedtimezone.length >0){
+                const filterTimeZoneArrayJoinedString=selectedtimezone.map(time => `&refine=timezone:"${time}"`).join('');
+                finalURL +=`${filterTimeZoneArrayJoinedString}`   
+            }
+            if(search){ 
+                finalURL +=`&where="${search}"`
+            }
+            console.log("Final URL",finalURL);
+             setIsloading(true)
+            const response=await axios.get(finalURL)  
                 setcity((previous) => [...previous, ...response.data.results])
-                setoffset((pvs) => pvs + 20)
-            }, 2000);
-
+                setoffset((pvs) => pvs + 20) 
+        
         } catch (error) {
             console.error(error);
+            setError(error)
+        }
+        finally{
+            setIsloading(false)
         }
     }
 
@@ -122,6 +115,12 @@ const Table = () => {
         }
     }
 
+    const searchFunction=(value)=>{
+      setsearch(value)
+      setoffset(0)
+      setcity([])
+    }
+
     if (!city) {
         return
     }
@@ -130,8 +129,8 @@ const Table = () => {
         <>
             <div className="flex flex-col gap-5   px-24">
                 <div id="searchDiv" >
-                    <label className=" font-semibold " htmlFor="">Choose Your City</label>
-                    <input className="px-3 py-1 ml-6 rounded-lg" type="search" name="city" id="" placeholder="City Name" />
+                    <label className=" font-semibold " htmlFor="">SEARCH</label>
+                    <input onChange={(e)=>searchFunction(e.target.value)} value={search} className="px-3 py-1 ml-6 rounded-lg" type="search" name="city" id="" placeholder="City Name" />
                 </div>
                 <div className="block lg:flex lg:gap-6">
                     <div className="tableContainer  overflow-y-auto  lg:w-7/12" style={{ maxHeight: 599}} ref={tableRef} onScroll={handleScroll}>
@@ -151,7 +150,8 @@ const Table = () => {
 
                             </tbody>
                         </table>
-                        <h1 id="loading" className="text-white font-semibold p-3" >Loading...</h1>
+                        {isLoading && <h1 id="loading" className="text-white font-semibold p-3" >Loading...</h1>}
+                      
                     </div>
 
                     <Filter selectedCountryLiftUp={selectedCountryLiftUp} selectedcountries={selectedcountries} selectedTimeLiftUp={selectedTimeLiftUp} selectedtimezone={selectedtimezone} />
