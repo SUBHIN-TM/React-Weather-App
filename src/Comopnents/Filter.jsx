@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios"
 
 const Filter = ({selectedCountryLiftUp,selectedcountries,selectedTimeLiftUp,selectedtimezone}) => {
-    console.log("Filter");
+    // console.log("Filter");
     const [more1, setmore1] = useState(false)
     const [more2, setmore2] = useState(false)
 

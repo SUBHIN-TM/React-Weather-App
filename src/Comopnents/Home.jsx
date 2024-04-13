@@ -2,7 +2,7 @@ import Table from "./Table";
 
 
 const Home=()=>{
-     console.log("Home");
+    //  console.log("Home");
     return(
         <>
         <div>

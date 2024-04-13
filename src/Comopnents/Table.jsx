@@ -5,7 +5,7 @@ import { FaSort } from "react-icons/fa6";
 import Filter from "./Filter";
 
 const Table = () => {
-    console.log("Table");
+    // console.log("Table");
     const [city, setcity] = useState([])
     const [sort, setsort] = useState("")
     const [offset, setoffset] = useState(0)
@@ -13,25 +13,26 @@ const Table = () => {
     const [selectedtimezone,setselectedtimezone]=useState([])
     const tableRef = useRef(null) //REFFERENCE FOR SCROLLABLE CONTROLLER
    
-    const [filter]=useState(null)
     let baseURL="https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?";
-
-   
 
     useEffect(() => {
         allCity()
-    }, [sort])
+    }, [sort,selectedcountries,selectedtimezone])
 
 
     const selectedCountryLiftUp=(selectedCountries)=>{ 
-        setselectedcountries(selectedCountries)    
+        setselectedcountries(selectedCountries) 
+        setoffset(0)
+        setcity([])   
     }
-    // console.log("selectedcountries",selectedcountries);
+    console.log("selectedcountries",selectedcountries);
 
     const selectedTimeLiftUp=(selectedTime)=>{ 
-        setselectedtimezone(selectedTime)    
+        setselectedtimezone(selectedTime)
+        setoffset(0)
+        setcity([])       
     }
-    // console.log("selectedTimes",selectedtimezone);
+    console.log("selectedTimes",selectedtimezone);
    
 
 
@@ -69,17 +70,25 @@ const Table = () => {
     }
 
     const allCity = async () => {
-        console.log("called");
-
+        console.log("api get called");
         try {
+          //  let search=https://public.opendatasoft.com/explore/embed/dataset/geonames-all-cities-with-a-population-1000/table/?disjunctive.cou_name_en&sort=name&q=ko
             let response
-            if(filter){
+            if(selectedcountries.length >0 || selectedtimezone.length >0){
                 console.log("filter get");
-                const refineParams = filter.map(country => `refine=cou_name_en:"${country}"`).join('&');
-                response = await axios.get(`${baseURL}order_by=-cou_name_en&limit=20&offset=${offset}&${refineParams}`)
-                // response = await axios.get(`https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?limit=20&refine=cou_name_en:"Algeria"&refine=cou_name_en:"Angola"`)
-                // console.log("filer respo",response);
-               
+                const refineParamsTime=selectedtimezone.map(time => `&refine=timezone:"${time}"`).join('');
+                console.log("time url",refineParamsTime);
+                const refineParams = selectedcountries.map(country => `&refine=cou_name_en:"${country}"`).join('');
+                console.log("cntry url",refineParams);
+                // console.log(`${baseURL}order_by=-cou_name_en&limit=20&offset=${offset}${refineParamsTime}`);
+                if(sort){
+                    response = await axios.get(`${baseURL}order_by=${sort}&limit=20&offset=${offset}${refineParamsTime}${refineParams}`)
+                }else{
+                    response = await axios.get(`${baseURL}limit=20&offset=${offset}${refineParamsTime}${refineParams}`)
+                    // response = await axios.get(`https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?limit=20&refine=cou_name_en:"Algeria"&refine=cou_name_en:"Angola"`)
+                }
+             
+                console.log("fiter respo",response.data.results);        
             }
             else if (sort) {//IF SORT SELECT IT WILL CALL
                 console.log("sort call");
@@ -87,7 +96,8 @@ const Table = () => {
              
             } else { //IT IS A DEFAULT CALL WIHTOUT ANY SORTING
                 console.log("none");
-                response = await axios.get(`https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?limit=20&offset=${offset}`)
+                // response = await axios.get(`https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?limit=20&offset=${offset}`)
+                response = await axios.get(`https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?where='ko'&limit=20&order_by=name`)
             }
            
 
