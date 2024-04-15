@@ -28,6 +28,11 @@ body{
 
 #filterSection label{
   color: rgb(255, 254, 254);
+
+}
+
+#filterSection{
+  background: rgba(8 8 8 / 66%);
 }
 
 #loader {
