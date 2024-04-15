@@ -5,6 +5,7 @@ import { useLocation,useParams } from "react-router-dom";
 const WeatherPage=()=>{
     const apiKey='45b34f6f93ff403350ec501179866313'
     const wetherURL=`https://api.openweathermap.org/data/2.5/weather?lat=33.79712&lon=68.93749&appid=${apiKey}`
+    const foreCastURL=`https://api.openweathermap.org/data/2.5/forecast/daily?lat={lat}&lon={lon}&cnt={cnt}&appid=${apiKey}`
     const [city,setCity]=useState({
         cityName:null,
         longitude:null,
@@ -34,7 +35,15 @@ const WeatherPage=()=>{
 
    const fetch=async()=>{
     const response= await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${city.latitude}&lon=${city.longitude}&appid=${apiKey}`)
-    console.log(response.data);
+    console.log("weather deatails",response.data);
+    const responseForecast= await axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${city.latitude}&lon=${city.longitude}&appid=${apiKey}`)
+   
+   
+   console.log("forecastr",responseForecast.data);
+
+    
+   
+
 
    }
  
