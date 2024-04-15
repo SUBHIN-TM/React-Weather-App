@@ -5,7 +5,7 @@ const Home=()=>{
     return(
         <>
         <div>
-        <h1 className="font-semibold text-center text-2xl py-3 md:py-0 md:pt-3">Weather App</h1>
+        <h1 className="font-semibold text-center text-2xl py-6 md:py-0 md:pt-3">Weather App</h1>
         </div>
         <div >
             <div><Table/></div>

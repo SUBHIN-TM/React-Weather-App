@@ -53,7 +53,7 @@ const Filter = ({selectedCountryLiftUp,selectedcountries,selectedTimeLiftUp,sele
 
     return (
         <>
-            <div id="filterSection" className=" w-9/12 lg:w-7/12 xl:7/12 lg:mt-0  flex  xl:mt-0 font-semibold mt-9 ">
+            <div id="filterSection" className="my-11 md:my-0 overflow-hidden md:w-9/12 lg:w-7/12 xl:7/12 lg:mt-0  flex  xl:mt-0 font-semibold mt-9 ">
                 <div id="countryFilterBox" className=" w-6/12">
                     <h1 className="mb-3 pl-8 text-white py-3 bg-black ">Country Name</h1>
                     {allCountry.slice(0, 21).map((data) => {

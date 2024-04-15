@@ -127,13 +127,13 @@ const Table = () => {
 
     return (
         <>
-            <div className="flex flex-col gap-5   px-24">
+            <div className="flex flex-col gap-5 px-2  md:px-24">
                 <div id="searchDiv" >
                     <label className=" font-semibold " htmlFor="">SEARCH</label>
                     <input onChange={(e) => searchFunction(e.target.value)} value={search} className="px-3 py-1 ml-6 rounded-lg" type="search" name="city" id="" placeholder="City Name" />
                 </div>
                 <div className="block lg:flex lg:gap-6">
-                    <div className="tableContainer  overflow-y-auto  lg:w-7/12" style={{ maxHeight: 599 }} ref={tableRef} onScroll={handleScroll}>
+                    <div className="tableContainer  overflow-y-auto overflow-x-auto lg:w-7/12" style={{ maxHeight: 599 }} ref={tableRef} onScroll={handleScroll}>
                         <table className=" w-full">
                             <thead className=" bg-black text-white text-left sticky top-0">
                                 <tr className="">
