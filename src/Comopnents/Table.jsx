@@ -14,6 +14,7 @@ const Table = () => {
     const [selectedtimezone, setselectedtimezone] = useState([])
     const [search, setsearch] = useState("")
     const [isLoading, setIsloading] = useState(false)
+    const [noData,setNoData]=useState(false)
     const [error, setError] = useState(null)
     const tableRef = useRef(null) //REFFERENCE FOR SCROLLABLE CONTROLLER
 
@@ -90,6 +91,11 @@ const Table = () => {
             console.log("Final URL", finalURL);
             setIsloading(true) //TO FIND THE API CALL TIME AND PRINT LOADING WHILE PROMISE PENDING
             const response = await axios.get(finalURL)
+            if(response.data.results.length==0){
+                setNoData(true)
+            }else{
+                setNoData(false)
+            }
             setcity((previous) => [...previous, ...response.data.results])
             setoffset((pvs) => pvs + 20)
 
@@ -150,6 +156,7 @@ const Table = () => {
                             </tbody>
                         </table>
                         {/* LOADING IS ONLY TRUE WHEN THE FETCH CALLING IS WAITING */}
+                        {noData && <h1 id="loading" className="text-white font-semibold p-3" >Currently Unavailable</h1>}
                         {isLoading && <h1 id="loading" className="text-white font-semibold p-3" >Loading...</h1>}
                     </div>
                       {/* CREATED ANOTHER COMPONENT FOR FILTER SECTION */}

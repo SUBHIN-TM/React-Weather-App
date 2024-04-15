@@ -23,7 +23,6 @@ const WeatherPage=()=>{
     }
    },[rightClick,location.state])
 
-   
     return(
         <>
         <h1>{city.longitude}</h1>
