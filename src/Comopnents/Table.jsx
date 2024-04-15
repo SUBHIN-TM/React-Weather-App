@@ -37,10 +37,6 @@ const Table = () => {
         setcity([])
     }
 
-
-
-
-
     let sortFuction = (parameter) => {
         if (parameter === 'name') {
             setsort((previous) => {
