@@ -21,11 +21,11 @@ const ForeCast = ({ time, temp }) => {
 
 
     return (
-        <div className="forecast grid border  w-48  justify-center text-center rounded-xl p-3  text-white">
+        <div className="forecast grid border  w-40 sm:w-48  justify-center text-center rounded-xl p-3  text-white">
             <span >{dayName} {date} </span>
             <span>{timeString} </span>
             <div className="m-auto"><Image path={foreCast}  /></div>      
-            <span className="text-lg p-3 font-semibold">Weather : {temp}&nbsp;&deg;C</span>
+            <span className="sm:text-lg p-3 font-semibold">Weather : {temp}&nbsp;&deg;C</span>
         </div>
     )
 }

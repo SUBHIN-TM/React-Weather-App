@@ -138,10 +138,13 @@ const WeatherPage = () => {
                     </div>
                 </div>
 
-                <div className="flex justify-around mt-10 flex-wrap">
-                    {forecastDatas?.slice(0,7).map((data)=> {
-                      return( < ForeCast key={data.dt_txt} time={data.dt_txt}  temp={convertKelvinToCelsius(data.main.temp)} humidity={data.main.humidity}  />)           
-                    })}         
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4 mt-10">
+                    {forecastDatas?.slice(0,7).map((data)=> (
+                        <div  key={data.dt_txt} className=" p-2">
+                            < ForeCast time={data.dt_txt}  temp={convertKelvinToCelsius(data.main.temp)}/>
+                        </div>
+              
+                    ))}         
                 </div>
             </div>
         </>
