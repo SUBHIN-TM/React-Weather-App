@@ -84,7 +84,7 @@ const Table = () => {
             if (search) {
                 finalURL += `&where="${search}"`
             }
-            console.log("Final URL", finalURL);
+            // console.log("Final URL", finalURL);
             setIsloading(true) //TO FIND THE API CALL TIME AND PRINT LOADING WHILE PROMISE PENDING
             const response = await axios.get(finalURL)
             if(response.data.results.length==0){

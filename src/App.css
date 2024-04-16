@@ -83,3 +83,17 @@ body{
   display: none;
   text-align: center;
 }
+
+.weather{
+  background: rgba(8 8 8 / 66%);
+}
+
+.forecast img{
+  height: 7rem;
+  padding: 10px;
+ 
+}
+
+.forecast{
+  background: rgba(8 8 8 / 26%);
+}
