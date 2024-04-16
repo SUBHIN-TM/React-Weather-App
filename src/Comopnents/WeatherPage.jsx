@@ -122,7 +122,7 @@ const WeatherPage = () => {
 
     return (
         <>
-            <div className="sm:p-10 p-1 py-5 ">
+            <div className="sm:p-9 p-1 py-5">
                 <div className="weather rounded-xl p-5 sm:p-7 sm:pb-11 text-white">
                     <h1 className="font-bold text-xl">{city.cityName}</h1>
                     <h1><span>{date}</span> <br /><span>{time}</span></h1>
