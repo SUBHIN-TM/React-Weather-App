@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import Cloud from '../assets/cloud.png'
 import Image from "./Image";
 import ForeCast from "./ForeCast";
+import { FORECASTURL,WEATHERURL,APIKEY } from "../Constants/Links";
 
 
 const WeatherPage = () => {
@@ -18,13 +19,8 @@ const WeatherPage = () => {
 
     })
     const [forecastDatas,setforecastDatas] =useState(null)
-    const [foreCastMultipledata,setforeCastMultipledata] =useState({
-        time:null,
-        temp:null,
-        humidity:null
-    })
     const [isLoading, setIsloading] = useState(false)
-    const apiKey = '45b34f6f93ff403350ec501179866313'
+    const apiKey = APIKEY
     const [city, setCity] = useState({
         cityName: null,
         longitude: null,
@@ -66,14 +62,10 @@ const WeatherPage = () => {
         try {
             setIsloading(true)
             const [weatherResponse, forecastResponse] = await Promise.all([
-                axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${city.latitude}&lon=${city.longitude}&appid=${apiKey}`),
-                axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${city.latitude}&lon=${city.longitude}&appid=${apiKey}`)
-   
+                axios.get(`${WEATHERURL}?lat=${city.latitude}&lon=${city.longitude}&appid=${apiKey}`),
+                axios.get(`${FORECASTURL}?lat=${city.latitude}&lon=${city.longitude}&appid=${apiKey}`)
             ])
             setIsloading(false)
-            console.log("weather deatails", weatherResponse.data);
-            // console.log("forecastr", forecastResponse.data);
-
             const timestamp = weatherResponse.data.dt * 1000;
             const timezoneOffset = weatherResponse.data.timezone * 1000;
             const utcDate = new Date(timestamp);
@@ -117,7 +109,11 @@ const WeatherPage = () => {
     console.log(forecastDatas);
 
     if (isLoading) {
-        return
+        return(
+                <>
+                <div id="loader"></div> 
+                </>      
+        )
     }
 
     return (

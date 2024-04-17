@@ -5,6 +5,7 @@ import { FaSort } from "react-icons/fa6";
 import Filter from "./Filter";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { BASEURL } from "../Constants/Links";
 
 const Table = () => {
     const [city, setcity] = useState([])
@@ -17,8 +18,7 @@ const Table = () => {
     const [noData,setNoData]=useState(false)
     const [error, setError] = useState(null)
     const tableRef = useRef(null) //REFFERENCE FOR SCROLLABLE CONTROLLER
-
-    let baseURL = `https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?limit=20&offset=${offset}`
+    let baseURL = `${BASEURL}&offset=${offset}`
 
     useEffect(() => {
         allCity()
@@ -84,7 +84,7 @@ const Table = () => {
             if (search) {
                 finalURL += `&where="${search}"`
             }
-            // console.log("Final URL", finalURL);
+
             setIsloading(true) //TO FIND THE API CALL TIME AND PRINT LOADING WHILE PROMISE PENDING
             const response = await axios.get(finalURL)
             if(response.data.results.length==0){
@@ -99,6 +99,7 @@ const Table = () => {
             console.error(error);
             toast.error("Something Went Wrong")
             setError(error)
+            
         }
         finally {
             setIsloading(false) //API RESULT COMES MEANS PROMISE END AND IT MARKED AS FALSE TO REMOVE LOADING..
