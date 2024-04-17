@@ -1,4 +1,4 @@
-body{
+/* body{
     background-image: url('src/assets/back.jpg');
     background-size: cover;
     background-repeat: no-repeat;
@@ -6,8 +6,7 @@ body{
     width: 100%;
     min-height: 700px;
     
-}
-
+} */
 
 
 #tableRow{

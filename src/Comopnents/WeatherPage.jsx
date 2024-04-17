@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Cloud from '../assets/cloud.png'
+import backgroundImage from '../assets/Back.jpg'
 import Image from "./Image";
 import ForeCast from "./ForeCast";
 import { FORECASTURL,WEATHERURL,APIKEY } from "../Constants/Links";
@@ -116,9 +117,18 @@ const WeatherPage = () => {
         )
     }
 
+    const backgroundStyle ={
+        backgroundImage:`url(${backgroundImage})`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        width: '100%',
+        minHeight: '708px'
+      }
+
     return (
         <>
-            <div className="sm:p-9 p-1 py-5">
+            <div  style={backgroundStyle} className="sm:p-9 p-1 py-5">
                 <div className="weather rounded-xl p-5 sm:p-7 sm:pb-11 text-white">
                     <h1 className="font-bold text-xl">{city.cityName}</h1>
                     <h1><span>{date}</span> <br /><span>{time}</span></h1>

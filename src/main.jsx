@@ -4,6 +4,7 @@ import App from './App.jsx'
 import './index.css'
 import WeatherPage from './Comopnents/WeatherPage.jsx'
 
+
 ReactDOM.createRoot(document.getElementById('root')).render(
     <BrowserRouter>
     <Routes>
