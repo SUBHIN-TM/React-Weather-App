@@ -56,9 +56,6 @@ const WeatherPage = () => {
         return Math.floor(metersPerSecond * 3.6);
     }
 
-
-
-
     const fetch = async () => {
         try {
             setIsloading(true)
